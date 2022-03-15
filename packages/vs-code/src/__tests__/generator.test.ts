@@ -28,7 +28,6 @@ it('should generate correctly', async () => {
     .setProperty('editor.minimap.enabled', false)
     .setProperty('editor.rulers', [100])
     .setProperty('editor.renderWhitespace', 'boundary')
-    .setProperty('editor.codeActionsOnSave.source.fixAll', true)
     .setProperty(
       'editor.fontFamily',
       'Rec Mono Duotone, BerkeleyMonoVariable-Regular, Cascadia Code PL, MonoLisa, Menlo, Monaco, monospace'

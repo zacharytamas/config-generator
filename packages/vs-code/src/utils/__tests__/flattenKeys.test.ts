@@ -40,3 +40,23 @@ describe('without exclusions', () => {
     })
   })
 })
+
+describe('with exclusions', () => {
+  it('should return a properly flattened object with exclusions un-flattened', () => {
+    expect(
+      flattenKeys({
+        editor: { fontSize: 15 },
+        importSorter: {
+          sortConfiguration: {
+            __noFlatten: true,
+            joinImportPaths: true,
+            removeUnusedImports: true,
+          },
+        },
+      })
+    ).toEqual({
+      'editor.fontSize': 15,
+      'importSorter.sortConfiguration': { joinImportPaths: true, removeUnusedImports: true },
+    })
+  })
+})

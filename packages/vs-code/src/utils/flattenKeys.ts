@@ -22,7 +22,11 @@ flattenKeys.inner = (object: FlattenableObject, prefix?: string): Record<string,
       if (Array.isArray(value)) {
         return [[nextPrefix, value]]
       } else if (typeof value === 'object') {
-        return Object.entries(flattenKeys.inner(value, nextPrefix))
+        const { __noFlatten, ...obj } = value
+
+        return __noFlatten
+          ? [[nextPrefix, obj]]
+          : Object.entries(flattenKeys.inner(obj, nextPrefix))
       } else {
         return [[nextPrefix, value]]
       }
