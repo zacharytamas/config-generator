@@ -1,0 +1,23 @@
+{
+  "editor": {
+    "cursorBlinking": "expand",
+    "defaultFormatter": "esbenp.prettier-vscode",
+    "emptySelectionClipboard": false,
+    "lineHeight": 31,
+    "fontSize": 15,
+    "tabSize": 2,
+    "wordWrapColumn": 100,
+    "fontLigatures": true,
+    "fontWeight": "500",
+    "lineNumbers": "relative",
+    "tabCompletion": "on",
+    "suggestSelection": "first",
+    "smoothScrolling": true,
+    "formatOnSave": true,
+    "minimap": { "enabled": false },
+    "rulers": [100],
+    "renderWhitespace": "boundary",
+    "codeActionsOnSave": { "source": { "fixAll": true } },
+    "fontFamily": "Rec Mono Duotone, BerkeleyMonoVariable-Regular, Cascadia Code PL, MonoLisa, Menlo, Monaco, monospace"
+  }
+}

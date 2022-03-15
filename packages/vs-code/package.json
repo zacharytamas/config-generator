@@ -1,0 +1,13 @@
+{
+  "name": "@config-generator/vs-code",
+  "version": "1.0.0",
+  "type": "module",
+  "dependencies": {
+    "lodash-es": "^4.17.21",
+    "prettier": "^2.5.1"
+  },
+  "devDependencies": {
+    "@types/lodash-es": "^4.17.6",
+    "@types/prettier": "^2.4.4"
+  }
+}
