@@ -1,6 +1,6 @@
 import { readFile } from 'node:fs/promises';
 
-import Generator from '../generator.js';
+import vsCodeConfigBuilder from '../vsCodeConfigBuilder.js';
 
 const __dirname = new URL('.', import.meta.url).pathname
 
@@ -8,9 +8,7 @@ const readFixture = async (name: string) =>
   (await readFile(`${__dirname}fixtures/${name}`)).toString()
 
 it('should generate correctly', async () => {
-  const foo = new Generator()
-
-  foo
+  const foo = vsCodeConfigBuilder()
     .setProperty('editor.cursorBlinking', 'expand')
     .setProperty('editor.defaultFormatter', 'esbenp.prettier-vscode')
     .setProperty('editor.emptySelectionClipboard', false)

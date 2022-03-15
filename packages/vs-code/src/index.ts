@@ -1,1 +1,1 @@
-export { default as Generator } from './generator.js';
+export { default as vsCodeConfigBuilder } from './vsCodeConfigBuilder.js'
