@@ -1,4 +1,4 @@
-import { cloneDeep, mergeWith, set } from 'lodash-es';
+import { cloneDeep, mergeWith, set, setWith } from 'lodash-es';
 import prettier from 'prettier';
 
 import flattenKeys from './utils/flattenKeys.js';
@@ -11,20 +11,25 @@ type GeneratorValue = any
 
 type MixinFn = (builder: VSCodeConfigBuilder, currentValue: GeneratorValue) => VSCodeConfigBuilder
 
-interface VSCodeConfigBuilder {
+export interface VSCodeConfigBuilder {
+  toPrettierString(prettierOptions?: prettier.Options): string
   toString(): string
   map: (fn: (value: GeneratorValue) => GeneratorValue) => VSCodeConfigBuilder
   mixin: (fn: MixinFn) => ReturnType<MixinFn>
   mixinIf(condition: boolean, fn: MixinFn): ReturnType<MixinFn>
   fold: () => GeneratorValue
-  setProperty(key: Key, value: Json): VSCodeConfigBuilder
   extendProperty(key: Key, value: Record<string, Json>): VSCodeConfigBuilder
   setNoFlatten(key: Key): VSCodeConfigBuilder
 }
 
 const vsCodeConfigBuilder = (value: GeneratorValue = {}): VSCodeConfigBuilder => {
   return {
-    toString: () => prettier.format(JSON.stringify(flattenKeys(value)), { parser: 'json' }),
+    toString() {
+      return JSON.stringify(flattenKeys(value))
+    },
+    toPrettierString({ printWidth = 100, ...options }: prettier.Config = {}) {
+      return prettier.format(this.toString(), { parser: 'json', printWidth, ...options })
+    },
     map: (fn) => vsCodeConfigBuilder(fn(value)),
 
     mixin(fn) {
@@ -38,13 +43,9 @@ const vsCodeConfigBuilder = (value: GeneratorValue = {}): VSCodeConfigBuilder =>
 
     fold: () => value,
 
-    setProperty(key, value) {
-      return this.map((v) => set(cloneDeep(v), key, value))
-    },
-
     extendProperty(key, value) {
       return this.map((v) =>
-        mergeWith(cloneDeep(v), set({}, key, value), (objValue, srcValue) => {
+        mergeWith(cloneDeep(v), setWith({}, key, value, console.log), (objValue, srcValue) => {
           if (typeof objValue === 'object' && typeof srcValue === 'object') {
             return { ...objValue, ...srcValue }
           }

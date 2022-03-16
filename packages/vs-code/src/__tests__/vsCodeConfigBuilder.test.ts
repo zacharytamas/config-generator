@@ -8,30 +8,29 @@ const readFixture = async (name: string) =>
   (await readFile(`${__dirname}fixtures/${name}`)).toString()
 
 it('should generate correctly', async () => {
-  const foo = vsCodeConfigBuilder()
-    .setProperty('editor.cursorBlinking', 'expand')
-    .setProperty('editor.defaultFormatter', 'esbenp.prettier-vscode')
-    .setProperty('editor.emptySelectionClipboard', false)
-    .setProperty('editor.lineHeight', 31)
-    .setProperty('editor.fontSize', 15)
-    .setProperty('editor.tabSize', 2)
-    .setProperty('editor.wordWrapColumn', 100)
-    .setProperty('editor.fontLigatures', true)
-    .setProperty('editor.fontWeight', '500')
-    .setProperty('editor.lineNumbers', 'relative')
-    .setProperty('editor.tabCompletion', 'on')
-    .setProperty('editor.suggestSelection', 'first')
-    .setProperty('editor.smoothScrolling', true)
-    .setProperty('editor.formatOnSave', true)
-    .setProperty('editor.minimap.enabled', false)
-    .setProperty('editor.rulers', [100])
-    .setProperty('editor.renderWhitespace', 'boundary')
-    .setProperty(
-      'editor.fontFamily',
-      'Rec Mono Duotone, BerkeleyMonoVariable-Regular, Cascadia Code PL, MonoLisa, Menlo, Monaco, monospace'
-    )
+  const foo = vsCodeConfigBuilder().extendProperty('editor', {
+    cursorBlinking: 'expand',
+    defaultFormatter: 'esbenp.prettier-vscode',
+    emptySelectionClipboard: false,
+    lineHeight: 31,
+    fontSize: 15,
+    tabSize: 2,
+    wordWrapColumn: 100,
+    fontLigatures: true,
+    fontWeight: '500',
+    lineNumbers: 'relative',
+    tabCompletion: 'on',
+    suggestSelection: 'first',
+    smoothScrolling: true,
+    formatOnSave: true,
+    minimap: { enabled: false },
+    rulers: [100],
+    renderWhitespace: 'boundary',
+    fontFamily:
+      'Rec Mono Duotone, BerkeleyMonoVariable-Regular, Cascadia Code PL, MonoLisa, Menlo, Monaco, monospace',
+  })
 
-  const fooResult = foo.toString()
+  const fooResult = foo.toPrettierString()
 
   expect(fooResult).toEqual(await readFixture('config-1.json'))
 })
