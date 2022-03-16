@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "type": "module",
   "dependencies": {
+    "execa": "^6.1.0",
     "lodash-es": "^4.17.21",
     "prettier": "^2.5.1"
   },
