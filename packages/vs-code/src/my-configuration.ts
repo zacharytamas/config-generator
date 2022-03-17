@@ -1,12 +1,41 @@
 import vsCodeConfigBuilder from './vsCodeConfigBuilder.js';
 
+interface FontDescription {
+  fontFamily: string
+  fontSize: number
+  fontWeight: number | string
+  lineHeight: number
+  fontLigatures: boolean | string
+}
+
+const terminalFont = (
+  font: keyof typeof fontSettings
+): Pick<FontDescription, 'fontFamily' | 'fontSize' | 'fontWeight'> => {
+  const { lineHeight, fontLigatures, ...rest } = fontSettings[font]
+  return rest
+}
+
 const fontSettings = {
-  cascadia: {
+  Cascadia: {
     fontSize: 15,
-    fontWeight: 600,
+    fontWeight: 500,
     lineHeight: 31,
     fontFamily: 'Cascadia Code PL, monospace',
     fontLigatures: "'ss01', 'ss02', 'ss03', 'ss04', 'ss05', 'ss06', 'onum', 'calt'",
+  },
+  FantasqueSansMono: {
+    fontSize: 16,
+    fontWeight: 'normal',
+    lineHeight: 31,
+    fontFamily: `Fantasque Sans Mono, monospace`,
+    fontLigatures: "'ss01'",
+  },
+  BerkeleyMonoVariable: {
+    fontSize: 16,
+    fontWeight: 140,
+    lineHeight: 31,
+    fontFamily: `Berkeley Mono Variable, monospace`,
+    fontLigatures: "'ss06'",
   },
 }
 
@@ -18,7 +47,7 @@ const useVim = true
 const useRewrap = true
 const useWallaby = true
 const useESLint = true
-const fontInUse: keyof typeof fontSettings = `cascadia`
+const fontInUse: keyof typeof fontSettings = `FantasqueSansMono`
 
 export const builder = vsCodeConfigBuilder()
   // Developer QOL
@@ -61,7 +90,7 @@ export const builder = vsCodeConfigBuilder()
           // Wrap comments at a line length of 75% the overall word wrap
           // length to enhance readability. This is very much a subjective
           // preference.
-          wrappingColumn: Math.floor((currentValue.editor?.wordWrapColumn ?? 100) * 0.75),
+          wrappingColumn: Math.floor((currentValue.editor?.wordWrapColumn ?? 100) * 0.85),
         })
       )
   )
@@ -112,7 +141,7 @@ export const builder = vsCodeConfigBuilder()
   // Theme
   .mixin((builder) =>
     builder.extendProperty('workbench', {
-      colorTheme: 'GitHub Dark',
+      colorTheme: 'One Dark Pro Darker',
       iconTheme: 'material-icon-theme',
       productIconTheme: 'fluent-icons',
     })
@@ -144,8 +173,7 @@ export const builder = vsCodeConfigBuilder()
         osxExec: 'iTerm.app',
       },
       integrated: {
-        // Use the font size from the editor, if possible.
-        fontSize: currentValue.editor?.fontSize ?? 15,
+        ...terminalFont('BerkeleyMonoVariable'),
         cursorBlinking: true,
         cursorStyle: 'line',
         cursorWidth: 2,
@@ -219,10 +247,10 @@ export const builder = vsCodeConfigBuilder()
         removeUnusedDefaultImports: false,
         customOrderingRules: {
           rules: [
-            { regex: '^react', orderLevel: 5 },
-            { type: 'importMember', regex: '^$', orderLevel: 10 },
-            { regex: '^[@]', orderLevel: 30 },
-            { regex: '^[.]', orderLevel: 40 },
+            { orderLevel: 5, regex: '^react' },
+            { orderLevel: 10, regex: '^$', type: 'importMember' },
+            { orderLevel: 30, regex: '^[@]' },
+            { orderLevel: 40, regex: '^[.]' },
           ],
         },
       },
