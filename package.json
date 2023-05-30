@@ -9,7 +9,8 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "test": "yarn node --experimental-vm-modules $(yarn bin jest)"
+    "test": "yarn node --experimental-vm-modules $(yarn bin jest)",
+    "compare-vscode": "yarn workspace @config-generator/vs-code run compare"
   },
   "workspaces": [
     "packages/*"

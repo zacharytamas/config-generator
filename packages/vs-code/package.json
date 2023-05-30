@@ -2,6 +2,9 @@
   "name": "@config-generator/vs-code",
   "version": "1.0.0",
   "type": "module",
+  "scripts": {
+    "compare": "yarn ts-node-esm src/compareWithKSDiff.ts"
+  },
   "dependencies": {
     "execa": "^6.1.0",
     "lodash-es": "^4.17.21",
