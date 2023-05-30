@@ -1,0 +1,4 @@
+# `config-generator`
+
+This is an experimental project to deterministically generate configuration files for various devtools (for now just VS Code). The background is that I use
+devtools on multiple machines and I want my configurations on them to be mostly the same but capable of varying slightly based on the machine I'm using. Built-in sync features of devtools like VS Code have not been sufficient for this purpose. While they can synchronize settings, they don't allow for any variation in those settings based on the machine, so I end up with a lot of settings that are the same across machines but some that are different. This project aims to solve that problem by allowing me to generate the configuration files from a single source of truth. If I change a setting that is not machine-dependent, for example, it would get updated on all machines. If I change a setting that is machine-dependent, it would get updated only on the machine where it is different.
