@@ -58,12 +58,18 @@ export const builder = vsCodeConfigBuilder()
         title: '${activeEditorShort}${separator}${rootPath}',
       })
       .extendProperty('editor', {
+        semanticHighlighting: { enabled: true },
         tabCompletion: 'on',
         emptySelectionClipboard: false,
         suggestSelection: 'recentlyUsedByPrefix',
         tabSize: 2,
+        linkedEditing: true,
+        quickSuggestions: 'inline',
+        suggest: { localityBonus: true },
+        formatOnSaveMode: 'modificationsIfAvailable',
       })
       .extendProperty('workbench', {
+        'layoutControl.enabled': true,
         editor: {
           splitSizing: 'split',
           enablePreviewFromCodeNavigation: true,
@@ -111,6 +117,7 @@ export const builder = vsCodeConfigBuilder()
     builder
       .extendProperty('js/ts', { implicitProjectConfig: { checkJs: true } })
       .extendProperty('debug', { javascript: { autoAttachFilter: 'onlyWithFlag' } })
+      .extendProperty('javascript', { suggest: { completeFunctionCalls: true } })
       .mixinIf(useESLint, (builder) =>
         builder.extendProperty('eslint', {
           validate: ['javascript', 'javascriptreact', 'typescript', 'typescriptreact'],
@@ -126,7 +133,6 @@ export const builder = vsCodeConfigBuilder()
       minimap: { enabled: false },
       renderWhitespace: 'boundary',
       renderControlCharacters: true,
-      semanticHighlighting: { enabled: true },
       smoothScrolling: true,
       // Fortunately I don't need this support and there is a performance improvement
       // for not turning it on.
@@ -141,7 +147,7 @@ export const builder = vsCodeConfigBuilder()
   // Theme
   .mixin((builder) =>
     builder.extendProperty('workbench', {
-      colorTheme: 'One Dark Pro Darker',
+      colorTheme: 'GitHub Dark Default',
       iconTheme: 'material-icon-theme',
       productIconTheme: 'fluent-icons',
     })
